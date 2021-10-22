@@ -1,5 +1,6 @@
 Sub ABNTidentacaoRodape()
 
+'Carolina Machado - Revisão para quê?
 'Data: 22/10/2021
 'Função: deixa o número da nota de rodapé em destaque, como pede a ABNT.
 'Importante: se o documento tiver muitas notas, a macro pode levar algum tempo para finalizar o trabalho.
