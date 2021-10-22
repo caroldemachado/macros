@@ -1,7 +1,6 @@
 Sub ABNTidentacaoRodape()
 
-'Carolina Machado - Revisão para quê?
-'Data: 10/10/2021
+'Data: 22/10/2021
 'Função: deixa o número da nota de rodapé em destaque, como pede a ABNT.
 'Importante: se o documento tiver muitas notas, a macro pode levar algum tempo para finalizar o trabalho.
 'Pegue um café e aguarde a mágica acontecer! :)
@@ -10,6 +9,7 @@ Sub ABNTidentacaoRodape()
 'Verifica se o cursor está na área de notas
 If Selection.Information(wdInFootnote) = False Then
     MsgBox "Posicione o cursor na área de notas e tente novamente."
+    Exit Sub
 End If
 
 For Each Footnote In ActiveDocument.Footnotes 'Para cada nota nas notas do documento
