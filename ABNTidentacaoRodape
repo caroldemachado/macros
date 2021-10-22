@@ -1,0 +1,65 @@
+Sub ABNTidentacaoRodape()
+
+'Carolina Machado - Revisão para quê?
+'Data: 10/10/2021
+'Função: deixa o número da nota de rodapé em destaque, como pede a ABNT.
+'Importante: se o documento tiver muitas notas, a macro pode levar algum tempo para finalizar o trabalho.
+'Pegue um café e aguarde a mágica acontecer! :)
+
+
+'Verifica se o cursor está na área de notas
+If Selection.Information(wdInFootnote) = False Then
+    MsgBox "Posicione o cursor na área de notas e tente novamente."
+End If
+
+For Each Footnote In ActiveDocument.Footnotes 'Para cada nota nas notas do documento
+
+'Exclui o espaço depois do número da nota
+    With Footnote.Range.Characters.First.Previous
+        If .Text = " " Then .Text = ""
+    End With
+
+'Pula sempre para a próxima nota
+    n = n + 1
+    Selection.GoTo What:=wdGoToFootnote, _
+    Which:=wdGoToAbsolute, Count:=n
+
+'Se o cursor estiver em uma nota, vá para a primeira nota
+    If Selection.Information(wdInFootnote) Then
+    Set f = Selection.Paragraphs(1).Range.Footnotes(1)
+
+        'Se o número da nota for menor que 10, a identação vai medir 0.15
+            If f.Index < 10 Then
+                With Selection.ParagraphFormat
+                    .LeftIndent = CentimetersToPoints(0.15)
+                    .FirstLineIndent = CentimetersToPoints(-0.15)
+                End With
+        
+        'Se o número da nota for menor que 100, a identação vai medir 0.25
+            ElseIf f.Index < 100 Then
+               With Selection.ParagraphFormat
+                    .LeftIndent = CentimetersToPoints(0.25)
+                    .FirstLineIndent = CentimetersToPoints(-0.25)
+                End With
+        
+        'Se o número da nota for maior que 100, a identação vai medir 0.35
+            Else
+                With Selection.ParagraphFormat
+                    .LeftIndent = CentimetersToPoints(0.35)
+                    .FirstLineIndent = CentimetersToPoints(-0.35)
+                End With
+            End If
+    End If
+
+Next
+
+'Seleciona todas as notas e coloca em fonte 10, justificado
+    With Selection
+        .WholeStory
+        .Font.Size = 10
+        .ParagraphFormat.Alignment = wdAlignParagraphJustify
+    End With
+
+MsgBox "Tudo pronto! Suas notas estão formatadas. :)"
+
+End Sub
